@@ -83,27 +83,27 @@ foreach(@results)
 	my $inserts="";
 	if($des eq 'newitems')
 	{
-		$inserts = updatebagNewItems($bucketID,$ous);
+	$inserts = updatebagNewItems($bucketID,$ous);
 	}
 	elsif($des eq 'sagenewitems')
-  {
-    $inserts = updatebagSageNewItems($bucketID,$ous);
+	{
+	$inserts = updatebagSageNewItems($bucketID,$ous);
 	}
 	elsif($des eq 'recentreturned')
 	{
-		$inserts = updatebagRecentReturned($bucketID,$ous);
+	$inserts = updatebagRecentReturned($bucketID,$ous);
 	}
-  elsif($des eq 'newyoungadult')
-  {
-    $inserts = updatebagNewYoungAdultItems($bucketID,$ous);
-  }
-  elsif($des eq 'newkids')
-  {
-    $inserts = updatebagNewKidsItems($bucketID,$ous);
-  }
+	elsif($des eq 'newyoungadult')
+	{
+	$inserts = updatebagNewYoungAdultItems($bucketID,$ous);
+	}
+	elsif($des eq 'newkids')
+	{
+	$inserts = updatebagNewKidsItems($bucketID,$ous);
+	}
 	elsif($des eq 'last14daytopcirc')
 	{
-		$inserts = updatebag14daytopcirc($bucketID,$ous);				
+	$inserts = updatebag14daytopcirc($bucketID,$ous);				
 	}
 	if(length($inserts) > 0)
 	{
