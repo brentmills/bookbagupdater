@@ -48,11 +48,11 @@ if(! -e $xmlconf)
 
   # These are the 6 types:
   # Newly cataloged items in SAGE (regardless of age of bib)    (sagenewitems)
-	# Newly cataloged items by list member OU.										(newitems)
-  # Newly cataloged YA items (based on shelving loc)    				(newyoungadult)
-  # Newly cataloged Kids items (based on shelving loc)  				(newkids)
-  # Recently returned (last 100 items returned)         				(recentreturned)
-  # Last 14 days, top 100 circulated titles             				(last14daytopcirc)
+  # Newly cataloged items by list member OU.			(newitems)
+  # Newly cataloged YA items (based on shelving loc)    	(newyoungadult)
+  # Newly cataloged Kids items (based on shelving loc)  	(newkids)
+  # Recently returned (last 100 items returned)         	(recentreturned)
+  # Last 14 days, top 100 circulated titles             	(last14daytopcirc)
 	
 my $dt = DateTime->now(time_zone => "local"); 
 my $fdate = $dt->ymd; 
