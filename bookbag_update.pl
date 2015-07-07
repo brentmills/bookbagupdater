@@ -48,11 +48,11 @@ if(! -e $xmlconf)
 
   # These are the 6 types:
   # Newly cataloged items in SAGE (regardless of age of bib)    (sagenewitems)
-	# Newly cataloged items by list member OU.										(newitems)
-  # Newly cataloged YA items (based on shelving loc)    				(newyoungadult)
-  # Newly cataloged Kids items (based on shelving loc)  				(newkids)
-  # Recently returned (last 100 items returned)         				(recentreturned)
-  # Last 14 days, top 100 circulated titles             				(last14daytopcirc)
+  # Newly cataloged items by list member OU.			(newitems)
+  # Newly cataloged YA items (based on shelving loc)    	(newyoungadult)
+  # Newly cataloged Kids items (based on shelving loc)  	(newkids)
+  # Recently returned (last 100 items returned)        		(recentreturned)
+  # Last 14 days, top 100 circulated titles			(last14daytopcirc)
 	
 my $dt = DateTime->now(time_zone => "local"); 
 my $fdate = $dt->ymd; 
@@ -86,21 +86,21 @@ foreach(@results)
 		$inserts = updatebagNewItems($bucketID,$ous);
 	}
 	elsif($des eq 'sagenewitems')
-  {
-    $inserts = updatebagSageNewItems($bucketID,$ous);
+	{
+		$inserts = updatebagSageNewItems($bucketID,$ous);
 	}
 	elsif($des eq 'recentreturned')
 	{
 		$inserts = updatebagRecentReturned($bucketID,$ous);
 	}
-  elsif($des eq 'newyoungadult')
-  {
-    $inserts = updatebagNewYoungAdultItems($bucketID,$ous);
-  }
-  elsif($des eq 'newkids')
-  {
-    $inserts = updatebagNewKidsItems($bucketID,$ous);
-  }
+	elsif($des eq 'newyoungadult')
+	{
+		$inserts = updatebagNewYoungAdultItems($bucketID,$ous);
+	}
+	elsif($des eq 'newkids')
+	{
+		$inserts = updatebagNewKidsItems($bucketID,$ous);
+	}
 	elsif($des eq 'last14daytopcirc')
 	{
 		$inserts = updatebag14daytopcirc($bucketID,$ous);				
@@ -186,8 +186,8 @@ RECORD=\"REC\")
 SELECT (SELECT RECORD FROM ASSET.CALL_NUMBER WHERE ID=A.CALL_NUMBER AND RECORD>0 AND RECORD IS NOT NULL)
 \"REC\",CREATE_DATE::DATE FROM ASSET.COPY  A WHERE CIRC_LIB IN($ous)
 AND LOCATION IN(SELECT ID FROM ASSET.COPY_LOCATION WHERE OWNING_LIB IN($ous) AND OPAC_VISIBLE AND HOLDABLE AND
-CIRCULATE and NAME NOT IN ('Magazines','MAGAZINES','PERIODICALS','ADULT MAGAZINES','Stacks','Storage','CHILDREN''S
-MAGAZINES','ADULTOS ESPANOL REVISTAS'))
+CIRCULATE and NAME NOT IN
+('Magazines','MAGAZINES','PERIODICALS','ADULT MAGAZINES','Stacks','Storage','CHILDREN''S MAGAZINES','ADULTOS ESPANOL REVISTAS'))
 AND OPAC_VISIBLE AND HOLDABLE AND
 CIRCULATE AND ID != -1::BIGINT
 ORDER BY
@@ -270,8 +270,7 @@ SELECT (SELECT RECORD FROM ASSET.CALL_NUMBER WHERE ID=A.CALL_NUMBER AND RECORD>0
 \"REC\",CREATE_DATE::DATE FROM ASSET.COPY  A WHERE CIRC_LIB 
 IN($ous)
 AND LOCATION IN(SELECT ID FROM ASSET.COPY_LOCATION WHERE OWNING_LIB IN($ous) AND OPAC_VISIBLE AND HOLDABLE AND 
-CIRCULATE and NAME
-SIMILAR TO '%(YA|Young Adult|YOUNG ADULT)%') AND OPAC_VISIBLE AND HOLDABLE AND
+CIRCULATE and NAME SIMILAR TO '%(YA|Young Adult|YOUNG ADULT)%') AND OPAC_VISIBLE AND HOLDABLE AND
 CIRCULATE AND ID != -1::BIGINT
 ORDER BY
 CREATE_DATE::DATE DESC LIMIT 300
@@ -314,8 +313,8 @@ RECORD=\"REC\")
 SELECT (SELECT RECORD FROM ASSET.CALL_NUMBER WHERE ID=A.CALL_NUMBER AND RECORD>0 AND RECORD IS NOT NULL) 
 \"REC\",CREATE_DATE::DATE FROM ASSET.COPY A WHERE CIRC_LIB 
 IN($ous)
-AND LOCATION IN(SELECT ID FROM ASSET.COPY_LOCATION WHERE NAME SIMILAR TO 
-'%(Children|CHILDREN|JUV|JUVENILE|Juvenile|YOUTH|Youth)%' AND OPAC_VISIBLE) 
+AND LOCATION IN(SELECT ID FROM ASSET.COPY_LOCATION WHERE
+NAME SIMILAR TO '%(Children|CHILDREN|JUV|JUVENILE|Juvenile|YOUTH|Youth)%' AND OPAC_VISIBLE) 
 AND 
 OPAC_VISIBLE AND HOLDABLE AND CIRCULATE AND ID != -1::BIGINT
 ORDER BY
@@ -355,9 +354,9 @@ AND RECORD>0 AND RECORD IS NOT NULL) \"REC\"
 FROM ACTION.CIRCULATION  A 
 WHERE CIRC_LIB IN($ous) AND 
 (TARGET_COPY IN(SELECT ID FROM ASSET.COPY WHERE LOCATION IN(SELECT ID FROM ASSET.COPY_LOCATION WHERE OWNING_LIB 
-IN($ous) AND NAME NOT SIMILAR TO '%(Magazines|MAGAZINES|PERIODICALS|ADULT MAGAZINES|CHILDREN''S MAGAZINES|ADULTOS ESPANOL 
-REVISTAS)%' AND OPAC_VISIBLE AND HOLDABLE AND CIRCULATE) AND OPAC_VISIBLE AND HOLDABLE AND CIRCULATE AND ID != 
--1::BIGINT)) AND
+IN($ous)
+AND NAME NOT SIMILAR TO '%(Magazines|MAGAZINES|PERIODICALS|ADULT MAGAZINES|CHILDREN''S MAGAZINES|ADULTOS ESPANOL REVISTAS)%'
+AND OPAC_VISIBLE AND HOLDABLE AND CIRCULATE) AND OPAC_VISIBLE AND HOLDABLE AND CIRCULATE AND ID != -1::BIGINT)) AND
 XACT_START > NOW() - \$\$14 DAYS\$\$::INTERVAL
 ) AS B 
 GROUP BY \"REC\"
